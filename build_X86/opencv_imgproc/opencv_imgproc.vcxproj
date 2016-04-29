@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\imgproc\src\filterengine.hpp" />
+    <ClInclude Include="..\..\src\imgproc\src\gcgraph.hpp" />
+    <ClInclude Include="..\..\src\imgproc\src\precomp.hpp" />
+    <ClInclude Include="..\..\src\imgproc\src\_geom.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\imgproc\src\accum.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\approx.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\blend.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\canny.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\clahe.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\color.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\colormap.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\connectedcomponents.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\contours.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\convhull.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\corner.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\cornersubpix.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\demosaicing.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\deriv.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\distransform.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\drawing.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\emd.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\featureselect.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\filter.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\floodfill.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\gabor.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\generalized_hough.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\geometry.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\grabcut.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\hershey_fonts.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\histogram.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\hough.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\imgwarp.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\intersection.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\linefit.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\lsd.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\matchcontours.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\min_enclosing_triangle.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\moments.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\morph.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\phasecorr.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\pyramids.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\rotcalipers.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\samplers.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\segmentation.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\shapedescr.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\smooth.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\subdivision2d.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\sumpixels.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\tables.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\templmatch.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\thresh.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\undistort.cpp" />
+    <ClCompile Include="..\..\src\imgproc\src\utils.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{68B5D5E1-65DE-46BE-BFC2-B5D4C59CAAF1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>openvc_core</RootNamespace>
+    <ProjectName>opencv_imgproc</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>opencv_imgproc300d</TargetName>
+    <OutDir>..\..\bin\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;__OPENCV_BUILD=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
