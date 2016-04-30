@@ -20,6 +20,9 @@ class Kv {
 
   void clear();
 
+private:
+	const std::pair<std::string ,std::string> parse(const std::string &str);
+
  private:
   std::map<std::string, std::string> data_;
 };

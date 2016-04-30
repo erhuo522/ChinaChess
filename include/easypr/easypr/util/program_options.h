@@ -205,7 +205,7 @@ class Generator {
   bool add_usage_line(const char* option, const char* default_value,
                       const char* description);
 
-  const char kDelimiter = ',';
+  //const char kDelimiter = ',';
   SubroutineCollection subroutines_;
   std::string current_subroutine_;
   Parser* parser_;

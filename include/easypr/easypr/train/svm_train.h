@@ -11,9 +11,16 @@ namespace easypr {
 
 class SvmTrain : public ITrain {
  public:
-  typedef struct {
+  typedef struct TrainItem{
     std::string file;
     SvmLabel label;
+	
+	TrainItem(std::string f, SvmLabel l):
+		file(f),label(l)
+	{
+
+	}
+
   } TrainItem;
 
   SvmTrain(const char* plates_folder, const char* xml);

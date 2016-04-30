@@ -73,11 +73,13 @@ class Utils {
    * Print string lines using {"string1", "string2"},
    * this is a easier way benefit from C++11.
    */
-  static void print_str_lines(const std::initializer_list<const char*> &lines) {
-    for (auto line : lines) {
-      std::cout << line << std::endl;
+  
+  static void print_str_lines(const std::vector<std::string> &lines) {
+    for (auto it= lines.begin(); it != lines.end(); it++) {
+      std::cout << *it << std::endl;
     }
   }
+  
 
   /*
    * Read and print by line.
