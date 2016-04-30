@@ -48,16 +48,16 @@ void AnnTrain::test() {
     auto chars_files = utils::getFiles(sub_folder);
     int corrects = 0, sum = 0;
     std::vector<std::pair<std::string, std::string>> error_files;
-
-    for (auto file : chars_files) {
-      auto img = cv::imread(file, 0);  // a grayscale image
+	for(auto it = chars_files.begin();it != chars_files.end(); ++it)
+    {
+      auto img = cv::imread(*it, 0);  // a grayscale image
       std::pair<std::string, std::string> ch =
           CharsIdentify::instance()->identify(img);
       if (ch.first == char_key) {
         ++corrects;
       } else {
         error_files.push_back(
-            std::make_pair(utils::getFileName(file), ch.second));
+            std::make_pair(utils::getFileName(*it), ch.second));
       }
       ++sum;
     }
@@ -99,8 +99,9 @@ cv::Ptr<cv::ml::TrainData> AnnTrain::tdata() {
               << sub_folder << std::endl;
 
     auto chars_files = utils::getFiles(sub_folder);
-    for (auto file : chars_files) {
-      auto img = cv::imread(file, 0);  // a grayscale image
+	for( auto it = chars_files.begin(); it != chars_files.end(); ++it )
+    {
+      auto img = cv::imread(*it, 0);  // a grayscale image
       auto fps = features(img, kPredictSize);
 
       samples.push_back(fps);

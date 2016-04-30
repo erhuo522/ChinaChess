@@ -12,8 +12,9 @@ int CCharsRecognise::charsRecognise(Mat plate, std::string& plateLicense) {
 
   int result = m_charsSegment->charsSegment(plate, matChars);
   if (result == 0) {
-    for (auto block : matChars) {
-      auto character = CharsIdentify::instance()->identify(block);
+	  for( std::vector<Mat>::iterator it=matChars.begin(); it != matChars.end(); ++it )
+     {
+      auto character = CharsIdentify::instance()->identify(*it);
       plateLicense.append(character.second);
     }
   }

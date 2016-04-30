@@ -57,15 +57,17 @@ Generator& Generator::add_subroutine(const char* name,
     // a new subroutine
     current_subroutine_ = name;
     Subroutine* routine = new Subroutine(name, description);
-    subroutines_.insert({current_subroutine_, routine});
+    subroutines_.insert(std::pair<std::string, Subroutine*>(current_subroutine_, routine));
   }
   return *this;
 }
 
 std::map<std::string, std::string> Generator::get_subroutine_list() {
   std::map<std::string, std::string> kv;
-  for (auto pr : subroutines_) {
-    Subroutine* subroutine = pr.second;
+
+   for (std::map<std::string, Subroutine*>::iterator it = subroutines_.begin(); it != subroutines_.end(); it++)
+  {
+    Subroutine* subroutine = it->second;
     if (subroutine->get_name() != Subroutine::get_default_name())
       kv[subroutine->get_name()] = subroutine->get_description();
   }
@@ -75,7 +77,7 @@ std::map<std::string, std::string> Generator::get_subroutine_list() {
 bool Generator::add_usage_line(const char* option, const char* default_value,
                                const char* description) {
   std::string option_str(option);
-  auto delimiter_pos = option_str.find(kDelimiter);
+  auto delimiter_pos = option_str.find(',');
 
   std::string option_short;
   std::string option_long;
@@ -97,8 +99,9 @@ bool Generator::add_usage_line(const char* option, const char* default_value,
 }
 
 std::ostream& operator<<(std::ostream& out, Generator& generator) {
-  for (auto pr : generator.subroutines_) {
-    Subroutine* subroutine = pr.second;
+	 for (std::map<std::string, Subroutine*>::iterator it = generator.subroutines_.begin(); it != generator.subroutines_.end(); it++)
+    {
+    Subroutine* subroutine = it->second;
     if (subroutine->get_name() != Subroutine::get_default_name()) {
       out << subroutine->get_name() << "\t";
     }
@@ -320,8 +323,9 @@ bool Parser::has_or(std::initializer_list<const char*> options) {
   if (options.size() == 0) {
     return false;
   }
-  for (auto key : options) {
-    if (this->has(key)) return true;
+  for (auto it=options.begin(); it != options.end(); ++it )
+  {
+    if (this->has(*it)) return true;
   }
   return false;
 }
@@ -330,8 +334,9 @@ bool Parser::has_and(std::initializer_list<const char*> options) {
   if (options.size() == 0) {
     return false;
   }
-  for (auto key : options) {
-    if (!this->has(key)) return false;
+  for (auto it = options.begin(); it != options.end(); ++it )
+  {
+    if (!this->has(*it)) return false;
   }
   return true;
 }
@@ -373,14 +378,17 @@ void Parser::cleanup() {
 
 void Parser::set_addition() {
   if (subroutines_->find(subroutine_name_) != subroutines_->end()) {
-    for (const Row& row : *(subroutines_->at(subroutine_name_))) {
+    
+	Subroutine* subroutine = subroutines_->at(subroutine_name_);
+	for(auto iter = subroutine->begin(); iter != subroutine->end(); ++iter)
+	{
       // assume both -o and --option are allowed,
       // but only provide -o,
       // then set the another --option.
       // vice versa.
-      const std::string& def = row.value();
-      const std::string& ops = row.oshort();
-      const std::string& opl = row.olong();
+      const std::string& def = iter->value();
+      const std::string& ops = iter->oshort();
+      const std::string& opl = iter->olong();
       ParseResult& pr = *pr_;
 
       bool has_short = this->has(ops.c_str());
@@ -500,22 +508,23 @@ void Subroutine::print_with_row(std::ostream& out) {
 }
 
 void Subroutine::print_with_template(std::ostream& out) {
-  for (auto usage : usages_) {
+	for( auto it = usages_.begin(); it != usages_.end(); ++it )
+	{
     size_t i = 0;
     for (auto t = template_str_.begin(); t != template_str_.end(); ++t) {
       if (*t == '%') {
         switch (*(order_.begin() + i)) {
           case Row::kShort:
-            out << usage.oshort();
+            out << it->oshort();
             break;
           case Row::kLong:
-            out << usage.olong();
+            out << it->olong();
             break;
           case Row::kDefault:
-            out << usage.value();
+            out << it->value();
             break;
           case Row::kDescription:
-            out << usage.desc();
+            out << it->desc();
             break;
           default:
             break;

@@ -104,7 +104,8 @@ void create_learn_data(const char* raw_data_folder, const char* out_data_folder,
   std::random_shuffle(files.begin(), files.end());
 
   int count = 0;
-  for (auto f : files) {
+  for( auto it = files.begin(); it != files.end(); ++it )
+  {
 
     // 选取前how_many个rawdata数据作为learndata
 
@@ -114,17 +115,17 @@ void create_learn_data(const char* raw_data_folder, const char* out_data_folder,
 
     //读取数据，并对图片进行预处理
 
-    cv::Mat img = cv::imread(f);
+    cv::Mat img = cv::imread(*it);
     img = cut_top_bottom(img);
 
     std::string save_to(out_data_folder);
     if (*(save_to.end() - 1) != '/') {
       save_to.push_back('/');
     }
-    save_to.append(Utils::getFileName(f, true));
+    save_to.append(Utils::getFileName(*it, true));
 
     utils::imwrite(save_to, img);
-    std::cout << f << " -> " << save_to << std::endl;
+    std::cout << (*it) << " -> " << save_to << std::endl;
   }
   std::cout << "Learn data created successfully!" << std::endl;
 }
@@ -147,23 +148,24 @@ void tag_data(const char* source_folder, const char* has_plate_folder,
   }
 
   CPlateLocate locator;
-
-  for (auto f : files) {
-    auto filename = Utils::getFileName(f);
-    std::cout << "Tagging: " << f << std::endl;
+  for( auto it = files.begin(); it != files.end(); ++it )
+  {
+    auto filename = Utils::getFileName(*it);
+    std::cout << "Tagging: " << (*it) << std::endl;
 
     // auto plate_string = plate_from_path(f);
-    cv::Mat image = cv::imread(f);
+    cv::Mat image = cv::imread(*it);
     assert(!image.empty());
 
     std::vector<cv::Mat> maybe_plates;
     locator.plateLocate(image, maybe_plates);
 
     int plate_index = 0;
-    for (auto plate : maybe_plates) {
+	for( auto iter = maybe_plates.begin(); iter != maybe_plates.end(); ++iter )
+    {
       char save_to[255] = {0};
       int result = 0;
-      PlateJudge::instance()->plateJudge(plate, result);
+      PlateJudge::instance()->plateJudge(*iter, result);
       if (result == 1) {
         // it's a plate
         sprintf(save_to, "%s/%s_%d.jpg", has_plate_folder, filename.c_str(),
@@ -175,7 +177,7 @@ void tag_data(const char* source_folder, const char* has_plate_folder,
                 plate_index);
         std::cout << "[N] -> " << save_to << std::endl;
       }
-      utils::imwrite(save_to, plate);
+      utils::imwrite(save_to, *iter);
       ++plate_index;
     }
   }

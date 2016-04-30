@@ -14,29 +14,30 @@ void Kv::load(const std::string &file) {
     std::getline(reader, line);
     if (line.empty()) continue;
 
-    const auto parse = [](const std::string &str) {
-      std::string tmp, key, value;
-      for (size_t i = 0, len = str.length(); i < len; ++i) {
-        const char ch = str[i];
-        if (ch == ' ') {
-          if (i > 0 && str[i - 1] != ' ' && key.empty()) {
-            key = tmp;
-            tmp.clear();
-          }
-        } else {
-          tmp.push_back(ch);
-        }
-        if (i == len - 1) {
-          value = tmp;
-        }
-      }
-      return std::make_pair(key, value);
-    };
-
     auto kv = parse(line);
     this->add(kv.first, kv.second);
   }
   reader.close();
+}
+
+const std::pair<std::string ,std::string> Kv::parse(const std::string &str) 
+{
+	std::string tmp, key, value;
+	for (size_t i = 0, len = str.length(); i < len; ++i) {
+		const char ch = str[i];
+		if (ch == ' ') {
+			if (i > 0 && str[i - 1] != ' ' && key.empty()) {
+				key = tmp;
+				tmp.clear();
+			}
+		} else {
+			tmp.push_back(ch);
+		}
+		if (i == len - 1) {
+			value = tmp;
+		}
+	}
+	return std::make_pair(key, value);
 }
 
 std::string Kv::get(const std::string &key) {
