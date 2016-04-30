@@ -1018,13 +1018,13 @@ public:
         TLSDataContainer* k = tlsContainers_[key];
         if (!k)
             return;
-        try
+      //  try
         {
             k->deleteDataInstance(data);
         }
-        catch (...)
+        //catch (...)
         {
-            CV_DbgAssert(k == NULL); // Debug this!
+        //    CV_DbgAssert(k == NULL); // Debug this!
         }
     }
 };
