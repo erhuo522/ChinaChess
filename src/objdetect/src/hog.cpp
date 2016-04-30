@@ -2921,35 +2921,29 @@ void HOGDescriptor::readALTModel(String modelfile)
     FILE *modelfl;
     if ((modelfl = fopen(modelfile.c_str(), "rb")) == NULL)
     {
-        String eerr("file not exist");
-        String efile(__FILE__);
-        String efunc(__FUNCTION__);
-        throw Exception(Error::StsError, eerr, efile, efunc, __LINE__);
+        CV_Error(cv::Error::StsError, "file not exist");
+		return ;
     }
     char version_buffer[10];
     if (!fread (&version_buffer,sizeof(char),10,modelfl))
     {
-        String eerr("version?");
-        String efile(__FILE__);
-        String efunc(__FUNCTION__);
-        throw Exception(Error::StsError, eerr, efile, efunc, __LINE__);
+       CV_Error(cv::Error::StsError,  "version?");
+       return ;
     }
     if(strcmp(version_buffer,"V6.01")) {
-        String eerr("version doesnot match");
-        String efile(__FILE__);
-        String efunc(__FUNCTION__);
-        throw Exception(Error::StsError, eerr, efile, efunc, __LINE__);
+        CV_Error(cv::Error::StsError, "version doesnot match");
+       return ;
     }
     /* read version number */
     int version = 0;
     if (!fread (&version,sizeof(int),1,modelfl))
-    { throw Exception(); }
+    {
+		return ;
+	}
     if (version < 200)
     {
-        String eerr("version doesnot match");
-        String efile(__FILE__);
-        String efunc(__FUNCTION__);
-        throw Exception();
+        CV_Error(cv::Error::StsError, "version doesnot match");
+         return ;
     }
     int kernel_type;
     size_t nread;
@@ -2992,7 +2986,7 @@ void HOGDescriptor::readALTModel(String modelfile)
         nread = fread(linearwt, sizeof(double), totwords + 1, modelfl);
         if(nread != static_cast<size_t>(length) + 1) {
             delete [] linearwt;
-            throw Exception();
+            //throw Exception();
         }
 
         for(int i = 0; i < length; i++)
@@ -3001,9 +2995,8 @@ void HOGDescriptor::readALTModel(String modelfile)
         detector.push_back((float)-linearbias);
         setSVMDetector(detector);
         delete [] linearwt;
-    } else {
-        throw Exception();
     }
+
     fclose(modelfl);
 }
 

@@ -85,54 +85,7 @@
 
 namespace cv {
 
-//! @addtogroup core_utils
-//! @{
 
-/*! @brief Class passed to an error.
-
-This class encapsulates all or almost all necessary
-information about the error happened in the program. The exception is
-usually constructed and thrown implicitly via CV_Error and CV_Error_ macros.
-@see error
- */
-class CV_EXPORTS Exception : public std::exception
-{
-public:
-    /*!
-     Default constructor
-     */
-    Exception();
-    /*!
-     Full constructor. Normally the constuctor is not called explicitly.
-     Instead, the macros CV_Error(), CV_Error_() and CV_Assert() are used.
-    */
-    Exception(int _code, const String& _err, const String& _func, const String& _file, int _line);
-    virtual ~Exception() throw();
-
-    /*!
-     \return the error description and the context as a text string.
-    */
-    virtual const char *what() const throw();
-    void formatMessage();
-
-    String msg; ///< the formatted error message
-
-    int code; ///< error code @see CVStatus
-    String err; ///< error description
-    String func; ///< function name. Available only when the compiler supports getting it
-    String file; ///< source file name where the error has occured
-    int line; ///< line number in the source file where the error has occured
-};
-
-/*! @brief Signals an error and raises the exception.
-
-By default the function prints information about the error to stderr,
-then it either stops if cv::setBreakOnError() had been called before or raises the exception.
-It is possible to alternate error processing by using cv::redirectError().
-@param exc the exception raisen.
-@deprecated drop this version
- */
-CV_EXPORTS void error( const Exception& exc );
 
 enum SortFlags { SORT_EVERY_ROW    = 0, //!< each matrix row is sorted independently
                  SORT_EVERY_COLUMN = 1, //!< each matrix column is sorted

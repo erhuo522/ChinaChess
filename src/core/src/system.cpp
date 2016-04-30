@@ -196,29 +196,8 @@ std::wstring GetTempFileNameWinRT(std::wstring prefix)
 
 namespace cv
 {
-
-Exception::Exception() { code = 0; line = 0; }
-
-Exception::Exception(int _code, const String& _err, const String& _func, const String& _file, int _line)
-: code(_code), err(_err), func(_func), file(_file), line(_line)
-{
-    formatMessage();
-}
-
-Exception::~Exception() throw() {}
-
-/*!
- \return the error description and the context as a text string.
- */
-const char* Exception::what() const throw() { return msg.c_str(); }
-
-void Exception::formatMessage()
-{
-    if( func.size() > 0 )
-        msg = format("%s:%d: error: (%d) %s in function %s\n", file.c_str(), line, code, err.c_str(), func.c_str());
-    else
-        msg = format("%s:%d: error: (%d) %s\n", file.c_str(), line, code, err.c_str());
-}
+	 
+	 
 
 struct HWFeatures
 {
@@ -598,39 +577,12 @@ bool setBreakOnError(bool value)
     breakOnError = value;
     return prevVal;
 }
-
-void error( const Exception& exc )
-{
-    if (customErrorCallback != 0)
-        customErrorCallback(exc.code, exc.func.c_str(), exc.err.c_str(),
-                            exc.file.c_str(), exc.line, customErrorCallbackData);
-    else
-    {
-        const char* errorStr = cvErrorStr(exc.code);
-        char buf[1 << 16];
-
-        sprintf( buf, "OpenCV Error: %s (%s) in %s, file %s, line %d",
-            errorStr, exc.err.c_str(), exc.func.size() > 0 ?
-            exc.func.c_str() : "unknown function", exc.file.c_str(), exc.line );
-        fprintf( stderr, "%s\n", buf );
-        fflush( stderr );
-#  ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_ERROR, "cv::error()", "%s", buf);
-#  endif
-    }
-
-    if(breakOnError)
-    {
-        static volatile int* p = 0;
-        *p = 0;
-    }
-
-    throw exc;
-}
-
+ 
 void error(int _code, const String& _err, const char* _func, const char* _file, int _line)
 {
-    error(cv::Exception(_code, _err, _func, _file, _line));
+        fprintf( stderr, "OpenCV Error: %s  in file %s, line %d",
+                          _err.c_str(),  _file, _line );
+        fflush( stderr );
 }
 
 CvErrorCallback
@@ -770,7 +722,7 @@ CV_IMPL void cvError( int code, const char* func_name,
                       const char* err_msg,
                       const char* file_name, int line )
 {
-    cv::error(cv::Exception(code, err_msg, func_name, file_name, line));
+    cv::error(code, err_msg, func_name, file_name, line);
 }
 
 /* function, which converts int to int */

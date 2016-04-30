@@ -317,8 +317,9 @@ void command_line_handler(int argc, const char* argv[]) {
 
                      auto results = easypr::api::plate_recognize(
                          image.c_str(), svm.c_str(), ann.c_str());
-                     for (auto s : results) {
-                       std::cout << s << std::endl;
+					 for( auto it = results.begin(); it != results .end(); it++)
+					 {
+                       std::cout << *it << std::endl;
                      }
                    }
                  }
@@ -334,8 +335,9 @@ void command_line_handler(int argc, const char* argv[]) {
             << " command [options]\n\n"
             << "The commands are:\n" << std::endl;
         auto subs = options.get_subroutine_list();
-        for (auto sub : subs) {
-          fprintf(stdout, "%s    %s\n", sub.first.c_str(), sub.second.c_str());
+		 for( auto it = subs.begin(); it != subs .end(); it++)
+         {
+          fprintf(stdout, "%s    %s\n", it->first.c_str(), it->second.c_str());
         }
         std::cout << std::endl;
       });
