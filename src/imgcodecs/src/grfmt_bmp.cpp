@@ -86,7 +86,7 @@ bool  BmpDecoder::readHeader()
     else if( !m_strm.open( m_filename ))
         return false;
 
-    try
+   // try
     {
         m_strm.skip( 10 );
         m_offset = m_strm.getDWord();
@@ -163,9 +163,9 @@ bool  BmpDecoder::readHeader()
             }
         }
     }
-    catch(...)
-    {
-    }
+  //  catch(...)
+  //  {
+  //  }
 
     m_type = iscolor ? CV_8UC3 : CV_8UC1;
     m_origin = m_height > 0 ? IPL_ORIGIN_BL : IPL_ORIGIN_TL;
@@ -214,7 +214,7 @@ bool  BmpDecoder::readData( Mat& img )
     }
     uchar *src = _src, *bgr = _bgr;
 
-    try
+   // try
     {
         m_strm.setPos( m_offset );
 
@@ -473,7 +473,7 @@ decode_rle8_bad: ;
             assert(0);
         }
     }
-    catch(...)
+    //catch(...)
     {
     }
 

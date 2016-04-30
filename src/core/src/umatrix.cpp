@@ -257,16 +257,16 @@ void UMat::create(int d, const int* _sizes, int _type, UMatUsageFlags _usageFlag
         MatAllocator *a = allocator, *a0 = getStdAllocator();
         if(!a)
             a = a0;
-        try
+        //try
         {
             u = a->allocate(dims, size, _type, 0, step.p, 0, usageFlags);
             CV_Assert(u != 0);
         }
-        catch(...)
+        //catch(...)
         {
-            if(a != a0)
-                u = a0->allocate(dims, size, _type, 0, step.p, 0, usageFlags);
-            CV_Assert(u != 0);
+        //    if(a != a0)
+         //       u = a0->allocate(dims, size, _type, 0, step.p, 0, usageFlags);
+         //   CV_Assert(u != 0);
         }
         CV_Assert( step[dims-1] == (size_t)CV_ELEM_SIZE(flags) );
     }

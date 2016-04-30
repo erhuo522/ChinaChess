@@ -2836,17 +2836,17 @@ cvOpenFileStorage( const char* filename, CvMemStorage* dststorage, int flags, co
 
         //mode = cvGetErrMode();
         //cvSetErrMode( CV_ErrModeSilent );
-        try
+        //try
         {
             if( fs->fmt == CV_STORAGE_FORMAT_XML )
                 icvXMLParse( fs );
             else
                 icvYMLParse( fs );
         }
-        catch (...)
+        //catch (...)
         {
-            cvReleaseFileStorage( &fs );
-            throw;
+          //  cvReleaseFileStorage( &fs );
+          //  throw;
         }
         //cvSetErrMode( mode );
 
