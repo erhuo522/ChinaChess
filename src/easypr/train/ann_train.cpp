@@ -19,7 +19,7 @@ void AnnTrain::train() {
 
   ann_->setLayerSizes(layers);
   ann_->setActivationFunction(cv::ml::ANN_MLP::SIGMOID_SYM, 1, 1);
-  ann_->setTrainMethod(cv::ml::ANN_MLP::TrainingMethods::BACKPROP);
+  ann_->setTrainMethod(cv::ml::ANN_MLP::BACKPROP);
   ann_->setBackpropWeightScale(0.1);
   ann_->setBackpropMomentumScale(0.1);
 
@@ -118,7 +118,7 @@ cv::Ptr<cv::ml::TrainData> AnnTrain::tdata() {
     train_classes.at<float>(i, labels[i]) = 1.f;
   }
 
-  return cv::ml::TrainData::create(samples_, cv::ml::SampleTypes::ROW_SAMPLE,
+  return cv::ml::TrainData::create(samples_, cv::ml::ROW_SAMPLE,
                                    train_classes);
 }
 }
