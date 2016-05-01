@@ -1,6 +1,6 @@
 #include "easypr.h"
-#include "easypr/util/switch.hpp"
-
+#include "switch.hpp"
+#include "program_options.h"
 #include "accuracy.hpp"
 #include "chars.hpp"
 #include "plate.hpp"
