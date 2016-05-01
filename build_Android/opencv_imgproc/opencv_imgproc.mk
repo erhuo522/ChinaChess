@@ -55,18 +55,13 @@ LOCAL_SRC_FILES := $(OPENCV_ROOT_PATH)/src/imgproc/src/featureselect.cpp \
                    $(OPENCV_ROOT_PATH)/src/imgproc/src/min_enclosing_triangle.cpp \
 
 
-
-
-
 LOCAL_C_INCLUDES := $(OPENCV_ROOT_PATH)/include
 
 LOCAL_CFLAGS += -D__OPENCV_BUILD \
                 -D_ANDROID
 
 
-LOCAL_STATIC_LIBRARIES :=  opencv_core300 opencv_hal300
-
 LOCAL_MODULE:= opencv_imgproc300
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 

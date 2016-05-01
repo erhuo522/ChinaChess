@@ -1,22 +1,6 @@
 LOCAL_PATH := $(realpath $(call my-dir))
 OPENCV_ROOT_PATH := $(LOCAL_PATH)/../..
 
-#---------------------------------------------------------------------
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libjpeg
-LOCAL_SRC_FILES := $(LOCAL_PATH)/../jni/static_libs/liblibjpeg.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-#---------------------------------------------------------------------
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libpng
-LOCAL_SRC_FILES :=  $(LOCAL_PATH)/../jni/static_libs/liblibpng.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-#---------------------------------------------------------------------
-
 
 include $(CLEAR_VARS)
  
@@ -36,15 +20,10 @@ LOCAL_C_INCLUDES := $(OPENCV_ROOT_PATH)/include \
                      $(OPENCV_ROOT_PATH)/3rdparty/libjpeg 
  
 
-
 LOCAL_CFLAGS += -D__OPENCV_BUILD \
                 -D_ANDROID
-
-LOCAL_LDLIBS += -lz -llog
-
-LOCAL_STATIC_LIBRARIES :=  opencv_core300 opencv_hal300 libpng libjpeg
+ 
 
 LOCAL_MODULE:= opencv_imgcodecs300
 
-include $(BUILD_SHARED_LIBRARY)
-
+include $(BUILD_STATIC_LIBRARY)

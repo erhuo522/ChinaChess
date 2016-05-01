@@ -22,13 +22,14 @@ LOCAL_SRC_FILES := $(OPENCV_ROOT_PATH)/src/easypr/core/chars_identify.cpp \
                    $(OPENCV_ROOT_PATH)/src/easypr/train/svm_train.cpp \
                    $(OPENCV_ROOT_PATH)/src/easypr/util/kv.cpp \
                    $(OPENCV_ROOT_PATH)/src/easypr/util/util.cpp \
-                   $(OPENCV_ROOT_PATH)/src/easypr/util/program_options.cpp \
+
 
 LOCAL_C_INCLUDES := $(OPENCV_ROOT_PATH)/include \
                     $(OPENCV_ROOT_PATH)/include/easypr \
+                    
 
 
 LOCAL_MODULE:= opencv_easypr300
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 

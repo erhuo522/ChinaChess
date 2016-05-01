@@ -10,38 +10,37 @@ include $(MY_BUILD_PATH)/../opencv_imgcodecs/opencv_imgcodecs.mk
 include $(MY_BUILD_PATH)/../opencv_easypr/opencv_easypr.mk
 
 
-
 LOCAL_PATH = $(MY_BUILD_PATH)
 
+
+
+#---------------------------------------------------------------------
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libjpeg
+LOCAL_SRC_FILES := static_libs/liblibjpeg.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+#---------------------------------------------------------------------
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libpng
+LOCAL_SRC_FILES :=  static_libs/liblibpng.a
+include $(PREBUILT_STATIC_LIBRARY)
+
+#---------------------------------------------------------------------
+
+ 
 include $(CLEAR_VARS)
 
-####JNI#################################################
-AMAP_JNI_PATH = $(MY_BUILD_PATH)/../../../GDAmapAdapter/ANDROID/jni
 
-LOCAL_C_INCLUDES += $(AMAP_JNI_PATH)  \
-
-amap_jni_cpp = $(wildcard $(AMAP_JNI_PATH)/*.cpp)
-AMAP_JNI_SRC =$(amap_jni_cpp:$(LOCAL_PATH)/%=%)
-
-$(shell echo $(AMAP_JNI_SRC)>$(LOCAL_PATH)/echo_file)
-
-######################################################
-
-LOCAL_C_INCLUDES += \
-    $(GD_AMAP_BASE_INCLUDE) \
-    $(GD_AMAP_GRAPHIC_INCLUDE) \
-    $(GD_AMAP_TOOLS_INCLUDE) \
-    $(GD_AMAP_DATAMGR_INCLUDE) \
-    $(GD_AMAP_MAP_MGR_INCLUDE) \
-
-LOCAL_SRC_FILES := $(AMAP_JNI_SRC) \
-
-LOCAL_MODULE    := gdinamapv4112
-
-LOCAL_STATIC_LIBRARIES := 
+LOCAL_SRC_FILES := easypr_jni/easypr_api_jni.cpp
 
 
+LOCAL_STATIC_LIBRARIES := opencv_objdetect300 opencv_ml300 opencv_imgproc300 opencv_imgcodecs300 opencv_core300 opencv_hal300 libjpeg libpng
 
-LOCAL_LDLIBS :=  -L$(SYSROOT)/usr/lib -llog -lGLESv1_CM -lz -ljnigraphics
+LOCAL_LDLIBS :=  -L$(SYSROOT)/usr/lib -llog  -lz
+
+LOCAL_MODULE    := jni_easypr
 
 include $(BUILD_SHARED_LIBRARY)
