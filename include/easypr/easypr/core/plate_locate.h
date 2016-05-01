@@ -29,7 +29,7 @@ class CPlateLocate {
   //! Sobel第一次搜索
   //! 不限制大小和形状，获取的BoundRect进入下一步
 
-  int sobelFrtSearch(const Mat& src, std::vector<Rect_<float>>& outRects);
+  int sobelFrtSearch(const Mat& src, std::vector<Rect_<float>& outRects);
 
   //! Sobel第二次搜索
   //! 对大小和形状做限制，生成参考坐标
