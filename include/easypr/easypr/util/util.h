@@ -75,7 +75,7 @@ class Utils {
    */
   
   static void print_str_lines(const std::vector<std::string> &lines) {
-    for (auto it= lines.begin(); it != lines.end(); it++) {
+	  for (std::vector<std::string>::const_iterator it= lines.begin(); it != lines.end(); it++) {
       std::cout << *it << std::endl;
     }
   }
