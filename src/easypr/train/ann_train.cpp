@@ -23,7 +23,7 @@ void AnnTrain::train() {
   ann_->setBackpropWeightScale(0.1);
   ann_->setBackpropMomentumScale(0.1);
 
-  auto traindata = tdata();
+  cv::Ptr<cv::ml::TrainData> traindata = tdata();
   std::cout << "Training ANN model, please wait..." << std::endl;
   long start = utils::getTimestamp();
   ann_->train(traindata);
@@ -39,7 +39,7 @@ void AnnTrain::test() {
   assert(chars_folder_);
 
   for (int i = 0; i < kCharsTotalNumber; ++i) {
-    auto char_key = kChars[i];
+    const char* char_key = kChars[i];
     char sub_folder[512] = {0};
 
     sprintf(sub_folder, "%s/%s", chars_folder_, char_key);

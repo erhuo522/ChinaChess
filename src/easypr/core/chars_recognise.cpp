@@ -14,7 +14,7 @@ int CCharsRecognise::charsRecognise(Mat plate, std::string& plateLicense) {
   if (result == 0) {
 	  for( std::vector<Mat>::iterator it=matChars.begin(); it != matChars.end(); ++it )
      {
-      auto character = CharsIdentify::instance()->identify(*it);
+      std::pair<std::string, std::string> character = CharsIdentify::instance()->identify(*it);
       plateLicense.append(character.second);
     }
   }

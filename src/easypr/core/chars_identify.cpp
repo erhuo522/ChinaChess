@@ -31,7 +31,7 @@ CharsIdentify::~CharsIdentify()
 
 std::pair<std::string, std::string> CharsIdentify::identify(cv::Mat input) {
   cv::Mat feature = features(input, kPredictSize);
-  auto index = static_cast<int>(ann_->predict(feature));
+  int index = static_cast<int>(ann_->predict(feature));
   if (index < 34) {
     return std::make_pair(kChars[index], kChars[index]);
   } else {
