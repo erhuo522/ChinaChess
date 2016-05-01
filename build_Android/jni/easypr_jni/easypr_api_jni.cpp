@@ -28,6 +28,10 @@ JNIEXPORT void JNICALL Java_com_machfe_easypr_EasyPRLib_init
     std::vector<std::string> results;
     if(easypr::api::plate_recognize(results, strImage.c_str(), strSVM.c_str(), strANN.c_str()))
     {
+       for(int i=0;i<results.size();i++)
+       {
+          LOGE("EasyPRLib", "plate=%s", results[i].c_str());
+       }
        LOGE("EasyPRLib", " plate_recognize return true");
     }
 

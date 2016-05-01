@@ -57,7 +57,10 @@ static bool plate_recognize(std::vector<std::string>& results,
   assert(bRet);
 
   cv::Mat img = cv::imread(image);
-  assert(!img.empty());
+  if(img.empty())
+  { 
+   return false;
+  }
 
   CPlateRecognize pr;
   pr.setLifemode(life_mode);
