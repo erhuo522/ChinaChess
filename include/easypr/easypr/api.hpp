@@ -15,8 +15,11 @@ namespace api {
 
 static bool init(const char* annFile, const char* charfile) 
 {
-	CharsIdentify::instance()->loadAnn(annFile, charfile);
-	return true;
+   if(!CharsIdentify::instance()->loadAnn(annFile, charfile))
+   {
+      return false; 
+   }
+   return  true;
 }
 
 static bool plate_judge(const char* image, const char* model) {
@@ -44,15 +47,14 @@ static void plate_locate(const char* image, const bool life_mode = true) {
   plate.plateLocate(src, results);
 }
 
-static std::vector<std::string> plate_recognize(const char* image,
-                                                const char* model_svm,
-                                                const char* model_ann,
-                                                const bool life_mode = true) {
+static bool plate_recognize(std::vector<std::string>& results,
+                            const char* image,
+                            const char* model_svm,
+                            const char* model_ann,
+                            const bool life_mode = true) {
 
   bool bRet= PlateJudge::instance()->loadSvm(model_svm);
   assert(bRet);
-
-  init(model_ann, "../../data-/etc/province_mapping");
 
   cv::Mat img = cv::imread(image);
   assert(!img.empty());
@@ -61,10 +63,16 @@ static std::vector<std::string> plate_recognize(const char* image,
   pr.setLifemode(life_mode);
   pr.setDebug(false);
 
-  std::vector<std::string> results;
-  pr.plateRecognize(img, results);
-
-  return std::move(results);
+  
+  if( pr.plateRecognize(img, results) == 0)
+  {
+    return true;
+  }
+  else
+  {
+     return false;
+  }
+ 
 }
 
 static Color get_plate_color(const char* image) {

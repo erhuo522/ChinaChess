@@ -37,7 +37,12 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := easypr_jni/easypr_api_jni.cpp
 
 
-LOCAL_STATIC_LIBRARIES := opencv_objdetect300 opencv_ml300 opencv_imgproc300 opencv_imgcodecs300 opencv_core300 opencv_hal300 libjpeg libpng
+
+LOCAL_C_INCLUDES := $(OPENCV_ROOT_PATH)/include \
+                    $(OPENCV_ROOT_PATH)/include/easypr \
+
+
+LOCAL_STATIC_LIBRARIES := opencv_easypr300 opencv_objdetect300 opencv_ml300 opencv_imgproc300 opencv_imgcodecs300 opencv_core300 opencv_hal300 libjpeg libpng
 
 LOCAL_LDLIBS :=  -L$(SYSROOT)/usr/lib -llog  -lz
 
