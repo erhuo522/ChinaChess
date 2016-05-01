@@ -3,7 +3,7 @@
 
 namespace easypr {
 
-PlateJudge* PlateJudge::instance_ = nullptr;
+PlateJudge* PlateJudge::instance_ = NULL;
 
 PlateJudge* PlateJudge::instance() {
   if (!instance_) {

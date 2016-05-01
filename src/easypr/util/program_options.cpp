@@ -16,7 +16,7 @@ ParseError::~ParseError() throw() {}
 
 // class Generator
 
-Generator::Generator() : parser_(nullptr) {
+Generator::Generator() : parser_(NULL) {
   current_subroutine_ = Subroutine::get_default_name();
   add_subroutine(current_subroutine_.c_str());
 }
@@ -24,12 +24,12 @@ Generator::Generator() : parser_(nullptr) {
 Generator::~Generator() {
   if (parser_) {
     delete parser_;
-    parser_ = nullptr;
+    parser_ = NULL;
   }
   for (auto it = subroutines_.begin(); it != subroutines_.end(); ++it) {
     if (it->second) {
       delete it->second;
-      it->second = nullptr;
+      it->second = NULL;
     }
   }
 }
@@ -124,16 +124,16 @@ ParseItem* Parser::get(const std::string& key) {
   if (pr_->find(key) != pr_->end()) {
     return (*pr_)[key];
   }
-  return nullptr;
+  return NULL;
 }
 
-Parser::Parser() : subroutines_(nullptr), pr_(nullptr) {}
+Parser::Parser() : subroutines_(NULL), pr_(NULL) {}
 
 Parser::~Parser() { this->cleanup(); }
 
 Parser::ParseResult* Parser::parse(const int argc, const char** argv) {
   if (!this->init(argc, argv)) {
-    return nullptr;
+    return NULL;
   }
   auto ibegin = args_.begin() + 1;  // ignore the first cmd name
   auto iend = args_.end();
@@ -175,7 +175,7 @@ Parser::ParseResult* Parser::parse(const int argc, const char** argv) {
           } else {
             // single option
             // e.g., ./exec -s
-            (*pr_)[block.substr(1)] = nullptr;
+            (*pr_)[block.substr(1)] = NULL;
           }
         }
         break;
@@ -186,7 +186,7 @@ Parser::ParseResult* Parser::parse(const int argc, const char** argv) {
             if (pos_equal == std::string::npos) {
               // a long format option
               // e.g., ./exec --option
-              (*pr_)[block.substr(2)] = nullptr;
+              (*pr_)[block.substr(2)] = NULL;
             } else {
               if (pos_equal > 3) {
                 // e.g, ./exec --op[..=]value
@@ -195,11 +195,11 @@ Parser::ParseResult* Parser::parse(const int argc, const char** argv) {
                   // e.g, ./exec --op=v
                   (*pr_)[key] = new ParseItem(block.substr(pos_equal + 1));
                 else
-                  (*pr_)[key] = nullptr;
+                  (*pr_)[key] = NULL;
               } else {
                 // a long format option but = is illegal
                 // e.g., ./exec --o=[...]
-                (*pr_)[block.substr(2)] = nullptr;
+                (*pr_)[block.substr(2)] = NULL;
               }
             }
           } else if (block[2] == '=') {
@@ -210,7 +210,7 @@ Parser::ParseResult* Parser::parse(const int argc, const char** argv) {
             if (block.size() > 3)
               (*pr_)[key] = new ParseItem(block.substr(3));
             else
-              (*pr_)[key] = nullptr;
+              (*pr_)[key] = NULL;
           } else {
             // a combination options
             // e.g., ./exec -ab[...]
@@ -221,7 +221,7 @@ Parser::ParseResult* Parser::parse(const int argc, const char** argv) {
             for (; t != tend; ++t) {
               std::string key;
               key.push_back(*t);
-              (*pr_)[key] = nullptr;
+              (*pr_)[key] = NULL;
             }
           }
         }
@@ -292,7 +292,7 @@ Parser::ParseResult* Parser::parse(const char* command_line) {
       this->parse(static_cast<const int>(size), const_cast<const char**>(argv));
 
   delete[] argv;
-  argv = nullptr;
+  argv = NULL;
 
   return pr;
 }
@@ -372,7 +372,7 @@ void Parser::cleanup() {
       if (item) delete item;
     }
     delete pr_;
-    pr_ = nullptr;
+    pr_ = NULL;
   }
 }
 
@@ -401,26 +401,26 @@ void Parser::set_addition() {
 
       if (!ops.empty()) {
         if (has_short) {
-          if (pr[ops] != nullptr && !opl.empty()) {
+          if (pr[ops] != NULL && !opl.empty()) {
             pr[opl] = new ParseItem(std::move(pr[ops]->val()));
-          } else if (pr[ops] == nullptr && !def.empty()) {
+          } else if (pr[ops] == NULL && !def.empty()) {
             pr[ops] = new ParseItem(std::move(def));
             if (!opl.empty()) pr[opl] = new ParseItem(std::move(def));
           } else {
-            pr[opl] = nullptr;
+            pr[opl] = NULL;
           }
         }
       }
 
       if (!opl.empty()) {
         if (has_long) {
-          if (pr[opl] != nullptr && !ops.empty()) {
+          if (pr[opl] != NULL && !ops.empty()) {
             pr[ops] = new ParseItem(std::move(pr[opl]->val()));
-          } else if (pr[opl] == nullptr && !def.empty()) {
+          } else if (pr[opl] == NULL && !def.empty()) {
             if (!ops.empty()) pr[ops] = new ParseItem(std::move(def));
             pr[opl] = new ParseItem(std::move(def));
           } else {
-            pr[ops] = nullptr;
+            pr[ops] = NULL;
           }
         }
       }

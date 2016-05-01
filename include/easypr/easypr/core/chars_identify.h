@@ -12,13 +12,16 @@ class CharsIdentify {
   static CharsIdentify* instance();
 
   std::pair<std::string, std::string> identify(cv::Mat input);
-
- private:
+ 
+public: 
   CharsIdentify();
+  virtual ~CharsIdentify();
+
+private:
 
   static CharsIdentify* instance_;
   cv::Ptr<cv::ml::ANN_MLP> ann_;
-  std::shared_ptr<Kv> kv_;
+  Kv* kv_;
 };
 }
 

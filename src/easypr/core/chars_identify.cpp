@@ -4,7 +4,7 @@
 
 namespace easypr {
 
-CharsIdentify* CharsIdentify::instance_ = nullptr;
+CharsIdentify* CharsIdentify::instance_ = NULL;
 
 CharsIdentify* CharsIdentify::instance() {
   if (!instance_) {
@@ -15,9 +15,19 @@ CharsIdentify* CharsIdentify::instance() {
 
 CharsIdentify::CharsIdentify() {
   ann_ = ml::ANN_MLP::load<ml::ANN_MLP>(kDefaultAnnPath);
-  kv_ = std::shared_ptr<Kv>(new Kv);
+  kv_ = new Kv();
   kv_->load("../../data/etc/province_mapping");
 }
+
+CharsIdentify::~CharsIdentify()
+{
+	if(kv_)
+	{
+		delete kv_;
+		kv_= NULL;
+	}
+}
+
 
 std::pair<std::string, std::string> CharsIdentify::identify(cv::Mat input) {
   cv::Mat feature = features(input, kPredictSize);
