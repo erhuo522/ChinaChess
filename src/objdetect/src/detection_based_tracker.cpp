@@ -208,20 +208,20 @@ cv::DetectionBasedTracker::SeparateDetectionWork::SeparateDetectionWork(Detectio
     res=pthread_mutex_init(&mutex, NULL);//TODO: should be attributes?
     if (res) {
         LOGE("ERROR in DetectionBasedTracker::SeparateDetectionWork::SeparateDetectionWork in pthread_mutex_init(&mutex, NULL) is %d", res);
-        throw(std::exception());
+        //throw(std::exception());
     }
     res=pthread_cond_init (&objectDetectorRun, NULL);
     if (res) {
         LOGE("ERROR in DetectionBasedTracker::SeparateDetectionWork::SeparateDetectionWork in pthread_cond_init(&objectDetectorRun,, NULL) is %d", res);
         pthread_mutex_destroy(&mutex);
-        throw(std::exception());
+        //throw(std::exception());
     }
     res=pthread_cond_init (&objectDetectorThreadStartStop, NULL);
     if (res) {
         LOGE("ERROR in DetectionBasedTracker::SeparateDetectionWork::SeparateDetectionWork in pthread_cond_init(&objectDetectorThreadStartStop,, NULL) is %d", res);
         pthread_cond_destroy(&objectDetectorRun);
         pthread_mutex_destroy(&mutex);
-        throw(std::exception());
+        //throw(std::exception());
     }
 #endif
 }
@@ -269,6 +269,11 @@ bool cv::DetectionBasedTracker::SeparateDetectionWork::run()
 }
 
 #define CATCH_ALL_AND_LOG(_block)                                                           \
+    {                                                                                       \
+        _block;                                                                             \
+    }    
+/*
+#define CATCH_ALL_AND_LOG(_block)                                                           \
     try {                                                                                   \
         _block;                                                                             \
     }                                                                                       \
@@ -279,11 +284,11 @@ bool cv::DetectionBasedTracker::SeparateDetectionWork::run()
     } catch(...) {                                                                          \
         LOGE0("\n %s: ERROR: UNKNOWN Exception caught\n\n", CV_Func);                       \
     }
-
+*/
 void* cv::workcycleObjectDetectorFunction(void* p)
 {
     CATCH_ALL_AND_LOG({ ((cv::DetectionBasedTracker::SeparateDetectionWork*)p)->workcycleObjectDetector(); });
-    try{
+    //try{
         ((cv::DetectionBasedTracker::SeparateDetectionWork*)p)->lock();
         ((cv::DetectionBasedTracker::SeparateDetectionWork*)p)->stateThread = cv::DetectionBasedTracker::SeparateDetectionWork::STATE_THREAD_STOPPED;
         ((cv::DetectionBasedTracker::SeparateDetectionWork*)p)->isObjectDetectingReady=false;
@@ -294,9 +299,9 @@ void* cv::workcycleObjectDetectorFunction(void* p)
         pthread_cond_signal(&(((cv::DetectionBasedTracker::SeparateDetectionWork*)p)->objectDetectorThreadStartStop));
 #endif
         ((cv::DetectionBasedTracker::SeparateDetectionWork*)p)->unlock();
-    } catch(...) {
-        LOGE0("DetectionBasedTracker: workcycleObjectDetectorFunction: ERROR concerning pointer, received as the function parameter");
-    }
+    //} catch(...) {
+    //    LOGE0("DetectionBasedTracker: workcycleObjectDetectorFunction: ERROR concerning pointer, received as the function parameter");
+    //}
     return NULL;
 }
 
