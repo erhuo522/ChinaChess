@@ -218,7 +218,7 @@ bool Utils::mkdir(const std::string folder) {
   std::string folder_builder;
   std::string sub;
   sub.reserve(folder.size());
-  for (auto it = folder.begin(); it != folder.end(); ++it) {
+  for (std::basic_string<char>::const_iterator it = folder.begin(); it != folder.end(); ++it) {
     const char c = *it;
     sub.push_back(c);
     if (c == PATH_DELIMITER || it == folder.end() - 1) {
@@ -245,7 +245,7 @@ bool Utils::mkdir(const std::string folder) {
 }
 
 bool Utils::imwrite(const std::string &file, const cv::Mat &image) {
-  auto folder = file.substr(0, utils::get_last_slash(file));
+  std::string folder = file.substr(0, utils::get_last_slash(file));
   Utils::mkdir(folder);
   return cv::imwrite(file, image);
 }

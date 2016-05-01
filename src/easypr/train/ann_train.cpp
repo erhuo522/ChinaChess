@@ -45,12 +45,13 @@ void AnnTrain::test() {
     sprintf(sub_folder, "%s/%s", chars_folder_, char_key);
     fprintf(stdout, ">> Testing characters %s in %s \n", char_key, sub_folder);
 
-    auto chars_files = utils::getFiles(sub_folder);
+    std::vector<std::string> chars_files = utils::getFiles(sub_folder);
     int corrects = 0, sum = 0;
-    std::vector<std::pair<std::string, std::string>> error_files;
-	for(auto it = chars_files.begin();it != chars_files.end(); ++it)
+    typedef std::pair<std::string, std::string> pair_type;
+    std::vector<pair_type> error_files;
+    for(std::vector<std::string>::const_iterator it = chars_files.begin();it != chars_files.end(); ++it)
     {
-      auto img = cv::imread(*it, 0);  // a grayscale image
+      cv::Mat img = cv::imread(*it, 0);  // a grayscale image
       std::pair<std::string, std::string> ch =
           CharsIdentify::instance()->identify(img);
       if (ch.first == char_key) {
@@ -64,12 +65,12 @@ void AnnTrain::test() {
     fprintf(stdout, ">>   [sum: %d, correct: %d, rate: %.2f]\n", sum, corrects,
             (float)corrects / (sum == 0 ? 1 : sum));
     std::string error_string;
-    auto end = error_files.end();
+    std::vector<pair_type>::const_iterator end = error_files.end();
     if (error_files.size() >= 10) {
       end -= static_cast<size_t>(error_files.size() * (1 - 0.1));
     }
-    for (auto k = error_files.begin(); k != end; ++k) {
-      auto kv = *k;
+    for (std::vector<pair_type>::const_iterator k = error_files.begin(); k != end; ++k) {
+      pair_type kv = *k;
       error_string.append("       ").append(kv.first).append(": ").append(
           kv.second);
       if (k != end - 1) {
@@ -91,18 +92,18 @@ cv::Ptr<cv::ml::TrainData> AnnTrain::tdata() {
   std::cout << "Collecting chars in " << chars_folder_ << std::endl;
 
   for (int i = 0; i < kCharsTotalNumber; ++i) {
-    auto char_key = kChars[i];
+    const char* char_key = kChars[i];
     char sub_folder[512] = {0};
 
     sprintf(sub_folder, "%s/%s", chars_folder_, char_key);
     std::cout << "  >> Featuring characters " << char_key << " in "
               << sub_folder << std::endl;
 
-    auto chars_files = utils::getFiles(sub_folder);
-	for( auto it = chars_files.begin(); it != chars_files.end(); ++it )
+    std::vector<std::string> chars_files = utils::getFiles(sub_folder);
+	for( std::vector<std::string>::const_iterator it = chars_files.begin(); it != chars_files.end(); ++it )
     {
-      auto img = cv::imread(*it, 0);  // a grayscale image
-      auto fps = features(img, kPredictSize);
+      cv::Mat img = cv::imread(*it, 0);  // a grayscale image
+      cv::Mat fps = features(img, kPredictSize);
 
       samples.push_back(fps);
       labels.push_back(i);

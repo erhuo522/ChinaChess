@@ -85,7 +85,7 @@ class Utils {
    * Read and print by line.
    */
   static void print_file_lines(const std::string &file) {
-    std::ifstream fs(file);
+    std::ifstream fs(file.c_str());
     if (fs.good()) {
       while (!fs.eof()) {
         std::string line;

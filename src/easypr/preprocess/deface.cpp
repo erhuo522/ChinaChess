@@ -19,7 +19,7 @@ cv::Mat detectAndMaskFace(cv::Mat& img, cv::CascadeClassifier& cascade,
                                //|CASCADE_DO_ROUGH_SEARCH
                                | cv::CASCADE_SCALE_IMAGE,
                            cv::Size(30, 30));
-  for (auto r = faces.begin(); r != faces.end(); r++) {
+  for (std::vector<cv::Rect>::const_iterator r = faces.begin(); r != faces.end(); r++) {
     cv::Rect facerect = *r;
     cv::Mat roi =
         img(cv::Rect_<double>(facerect.x * scale, facerect.y * scale,

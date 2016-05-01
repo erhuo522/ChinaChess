@@ -8,13 +8,13 @@ Kv::Kv() { }
 void Kv::load(const std::string &file) {
   this->clear();
 
-  std::ifstream reader(file);
+  std::ifstream reader(file.c_str());
   while (!reader.eof()) {
     std::string line;
     std::getline(reader, line);
     if (line.empty()) continue;
 
-    auto kv = parse(line);
+    const std::pair<std::string ,std::string> kv = parse(line);
     this->add(kv.first, kv.second);
   }
   reader.close();

@@ -26,7 +26,7 @@ Generator::~Generator() {
     delete parser_;
     parser_ = NULL;
   }
-  for (auto it = subroutines_.begin(); it != subroutines_.end(); ++it) {
+  for (std::map<std::string, Subroutine*>::iterator it = subroutines_.begin(); it != subroutines_.end(); ++it) {
     if (it->second) {
       delete it->second;
       it->second = NULL;
@@ -77,7 +77,7 @@ std::map<std::string, std::string> Generator::get_subroutine_list() {
 bool Generator::add_usage_line(const char* option, const char* default_value,
                                const char* description) {
   std::string option_str(option);
-  auto delimiter_pos = option_str.find(',');
+  std::size_t delimiter_pos = option_str.find(',');
 
   std::string option_short;
   std::string option_long;
@@ -319,22 +319,22 @@ bool Parser::has(const char* key) {
   return false;
 }
 
-bool Parser::has_or(std::initializer_list<const char*> options) {
+bool Parser::has_or(std::vector<const char*> options) {
   if (options.size() == 0) {
     return false;
   }
-  for (auto it=options.begin(); it != options.end(); ++it )
+  for (std::vector<const char*>::const_iterator it=options.begin(); it != options.end(); ++it )
   {
     if (this->has(*it)) return true;
   }
   return false;
 }
 
-bool Parser::has_and(std::initializer_list<const char*> options) {
+bool Parser::has_and(std::vector<const char*> options) {
   if (options.size() == 0) {
     return false;
   }
-  for (auto it = options.begin(); it != options.end(); ++it )
+  for (std::vector<const char*>::const_iterator it = options.begin(); it != options.end(); ++it )
   {
     if (!this->has(*it)) return false;
   }
@@ -364,9 +364,9 @@ bool Parser::init(const int argc, const char** argv) {
 void Parser::cleanup() {
   args_.clear();
   if (pr_) {
-    auto ibegin = pr_->begin();
-    auto iend = pr_->end();
-    auto it = ibegin;
+    std::map<std::string, ParseItem*>::iterator ibegin = pr_->begin();
+    std::map<std::string, ParseItem*>::iterator iend = pr_->end();
+    std::map<std::string, ParseItem*>::iterator it = ibegin;
     for (; it != iend; ++it) {
       ParseItem* item = it->second;
       if (item) delete item;
@@ -380,7 +380,7 @@ void Parser::set_addition() {
   if (subroutines_->find(subroutine_name_) != subroutines_->end()) {
     
 	Subroutine* subroutine = subroutines_->at(subroutine_name_);
-	for(auto iter = subroutine->begin(); iter != subroutine->end(); ++iter)
+	for(Subroutine:: Usages:: iterator iter = subroutine->begin(); iter != subroutine->end(); ++iter)
 	{
       // assume both -o and --option are allowed,
       // but only provide -o,
@@ -508,10 +508,10 @@ void Subroutine::print_with_row(std::ostream& out) {
 }
 
 void Subroutine::print_with_template(std::ostream& out) {
-	for( auto it = usages_.begin(); it != usages_.end(); ++it )
+	for( Usages::iterator it = usages_.begin(); it != usages_.end(); ++it )
 	{
     size_t i = 0;
-    for (auto t = template_str_.begin(); t != template_str_.end(); ++t) {
+    for (std::string::const_iterator t = template_str_.begin(); t != template_str_.end(); ++t) {
       if (*t == '%') {
         switch (*(order_.begin() + i)) {
           case Row::kShort:

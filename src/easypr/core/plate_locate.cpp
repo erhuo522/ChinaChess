@@ -116,7 +116,7 @@ int CPlateLocate::colorSearch(const Mat &src, const Color r, Mat &out,
 
   // 查找轮廓
 
-  vector<vector<Point>> contours;
+  vector< vector<Point> > contours;
 
   // 注意，findContours会改变src_threshold
   // 因此要输出src_threshold必须在这之前使用copyTo方法
@@ -126,7 +126,7 @@ int CPlateLocate::colorSearch(const Mat &src, const Color r, Mat &out,
                CV_RETR_EXTERNAL,
                CV_CHAIN_APPROX_NONE);  // all pixels of each contours
 
-  vector<vector<Point>>::iterator itc = contours.begin();
+  vector< vector<Point> >::iterator itc = contours.begin();
   while (itc != contours.end()) {
     RotatedRect mr = minAreaRect(Mat(*itc));
 
@@ -147,7 +147,7 @@ int CPlateLocate::colorSearch(const Mat &src, const Color r, Mat &out,
 //! 不限制大小和形状，获取的BoundRect进入下一步
 
 int CPlateLocate::sobelFrtSearch(const Mat &src,
-                                 vector<Rect_<float>> &outRects) {
+                                 vector< Rect_<float> > &outRects) {
   Mat src_threshold;
 
   // soble操作，得到二值图像
@@ -155,13 +155,13 @@ int CPlateLocate::sobelFrtSearch(const Mat &src,
   sobelOper(src, src_threshold, m_GaussianBlurSize, m_MorphSizeWidth,
             m_MorphSizeHeight);
 
-  vector<vector<Point>> contours;
+  vector< vector<Point> > contours;
   findContours(src_threshold,
                contours,               // a vector of contours
                CV_RETR_EXTERNAL,
                CV_CHAIN_APPROX_NONE);  // all pixels of each contours
 
-  vector<vector<Point>>::iterator itc = contours.begin();
+  vector< vector<Point> >::iterator itc = contours.begin();
 
   vector<RotatedRect> first_rects;
 
@@ -246,13 +246,13 @@ int CPlateLocate::sobelSecSearchPart(Mat &bound, Point2f refpoint,
     utils::imwrite("resources/image/tmp/repaireimg2.jpg", bound_threshold);
   }
 
-  vector<vector<Point>> contours;
+  vector< vector<Point> > contours;
   findContours(bound_threshold,
                contours,               // a vector of contours
                CV_RETR_EXTERNAL,
                CV_CHAIN_APPROX_NONE);  // all pixels of each contours
 
-  vector<vector<Point>>::iterator itc = contours.begin();
+  vector< vector<Point> >::iterator itc = contours.begin();
 
   vector<RotatedRect> second_rects;
   while (itc != contours.end()) {
@@ -290,13 +290,13 @@ int CPlateLocate::sobelSecSearch(Mat &bound, Point2f refpoint,
 
   utils::imwrite("resources/image/tmp/sobelSecSearch.jpg", bound_threshold);
 
-  vector<vector<Point>> contours;
+  vector< vector<Point> > contours;
   findContours(bound_threshold,
                contours,               // a vector of contours
                CV_RETR_EXTERNAL,
                CV_CHAIN_APPROX_NONE);  // all pixels of each contours
 
-  vector<vector<Point>>::iterator itc = contours.begin();
+  vector< vector<Point> >::iterator itc = contours.begin();
 
   vector<RotatedRect> second_rects;
   while (itc != contours.end()) {
@@ -824,13 +824,13 @@ int CPlateLocate::plateSobelLocate(Mat src, vector<CPlate> &candPlates,
   vector<RotatedRect> rects_sobel_sel;
   vector<CPlate> plates;
 
-  vector<Rect_<float>> bound_rects;
+  vector< Rect_<float> > bound_rects;
 
   // Sobel第一次粗略搜索
 
   sobelFrtSearch(src, bound_rects);
 
-  vector<Rect_<float>> bound_rects_part;
+  vector< Rect_<float> > bound_rects_part;
 
   //对不符合要求的区域进行扩展
 

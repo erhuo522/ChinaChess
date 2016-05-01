@@ -29,7 +29,7 @@ void SvmTrain::train() {
   svm_->setP(0.1);
   svm_->setTermCriteria(cvTermCriteria(CV_TERMCRIT_ITER, 100000, 0.00001));
 
-  auto train_data = tdata();
+ cv::Ptr<cv::ml::TrainData> train_data = tdata();
 
   fprintf(stdout, ">> Training SVM model, please wait...\n");
   long start = utils::getTimestamp();
@@ -64,9 +64,9 @@ void SvmTrain::test() {
   double pfalse_rtrue = 0;
   double pfalse_rfalse = 0;
 
-  for (auto it = test_file_list_.begin(); it != test_file_list_.end(); ++it )
+  for (std::vector<TrainItem>::const_iterator it = test_file_list_.begin(); it != test_file_list_.end(); ++it )
   {
-    auto image = cv::imread(it->file);
+    cv::Mat image = cv::imread(it->file);
     if (!image.data) {
       
       std::cout << "no" << std::endl;
@@ -77,12 +77,12 @@ void SvmTrain::test() {
 
     //std::cout << "predict: " << result << std::endl;
 
-    auto predict = int(svm_->predict(feature));
-    auto real = it->label;
-    if (predict == kForward && real == kForward) ptrue_rtrue++;
-    if (predict == kForward && real == kInverse) ptrue_rfalse++;
-    if (predict == kInverse && real == kForward) pfalse_rtrue++;
-    if (predict == kInverse && real == kInverse) pfalse_rfalse++;
+    int predict = int(svm_->predict(feature));
+    SvmLabel real_label = it->label;
+    if (predict == kForward && real_label == kForward) ptrue_rtrue++;
+    if (predict == kForward && real_label == kInverse) ptrue_rfalse++;
+    if (predict == kInverse && real_label == kForward) pfalse_rtrue++;
+    if (predict == kInverse && real_label == kInverse) pfalse_rfalse++;
   }
 
   std::cout << "count_all: " << count_all << std::endl;
@@ -132,8 +132,8 @@ void SvmTrain::prepare() {
   std::vector<std::string> no_file_list = utils::getFiles(buffer);
   std::random_shuffle(no_file_list.begin(), no_file_list.end());
 
-  auto has_num = has_file_list.size();
-  auto no_num = no_file_list.size();
+  size_t has_num = has_file_list.size();
+  size_t no_num = no_file_list.size();
 
   fprintf(stdout, ">> Collecting train data...\n");
 
@@ -142,27 +142,27 @@ void SvmTrain::prepare() {
 
   // copy kSvmPercentage of has_file_list to train_file_list_
   train_file_list_.reserve(has_for_train + no_for_train);
-  for (auto i = 0; i < has_for_train; i++) {
+  for (int i = 0; i < has_for_train; i++) {
     train_file_list_.push_back(TrainItem(has_file_list[i], kForward));
   }
   // copy kSvmPercentage of no_file_list to the end of train_file_list_
-  for (auto i = 0; i < no_for_train; i++) {
+  for (int i = 0; i < no_for_train; i++) {
     train_file_list_.push_back(TrainItem(no_file_list[i], kInverse));
   }
 
   fprintf(stdout, ">> Collecting test data...\n");
 
-  auto has_for_test = has_num - has_for_train;
-  auto no_for_test = no_num - no_for_train;
+  int has_for_test = has_num - has_for_train;
+  int no_for_test = no_num - no_for_train;
 
   // copy the rest of has_file_list to the test_file_list_
   test_file_list_.reserve(has_for_test + no_for_test);
-  for (auto i = has_for_train; i < has_num; i++) {
+  for (int i = has_for_train; i < has_num; i++) {
     test_file_list_.push_back(TrainItem(has_file_list[i], kForward));
   }
 
   // copy the rest of no_file_list to the end of the test_file_list_
-  for (auto i = no_for_train; i < no_num; i++) {
+  for (int i = no_for_train; i < no_num; i++) {
     test_file_list_.push_back(TrainItem(no_file_list[i], kInverse));
   }
 }
@@ -172,9 +172,9 @@ cv::Ptr<cv::ml::TrainData> SvmTrain::tdata() {
 
   cv::Mat samples;
   std::vector<int> responses;
-  for(auto it = train_file_list_.begin();it != train_file_list_.end(); ++it)
+  for(std::vector<TrainItem>::const_iterator it = train_file_list_.begin();it != train_file_list_.end(); ++it)
   {
-    auto image = cv::imread(it->file);
+    cv::Mat image = cv::imread(it->file);
     if (!image.data) {
       fprintf(stdout, ">> Invalid image: %s  ignore.\n", it->file.c_str());
       continue;

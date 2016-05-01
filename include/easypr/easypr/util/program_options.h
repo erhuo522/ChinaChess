@@ -15,7 +15,6 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <initializer_list>
 #include <stdarg.h>
 
 #ifdef __GNUC__
@@ -32,7 +31,7 @@ class Row {
 
   enum Field { kShort, kLong, kDefault, kDescription };
 
-  typedef std::initializer_list<Field> Order;
+  typedef std::vector<Field> Order;
 
   // getter
 
@@ -69,7 +68,7 @@ class Row {
 class Subroutine {
  public:
   typedef std::vector<Row> Usages;
-  typedef std::initializer_list<const char*> TemplateValue;
+  typedef std::vector<const char*> TemplateValue;
   typedef std::vector<TemplateValue> TemplateValues;
 
   Subroutine();
@@ -315,16 +314,16 @@ class Parser {
   }
 
   /*
-   * check whether a sequence of options exist using std::initializer_list
+   * check whether a sequence of options exist using std::vector
    * example: has_or({"he", "or", "she"});
    */
-  bool has_or(std::initializer_list<const char*> options);
+  bool has_or(std::vector<const char*> options);
 
   /*
-   * check whether a sequence of options exist using std::initializer_list
+   * check whether a sequence of options exist using std::vector
    * example: has_and({"he", "and", "she"});
    */
-  bool has_and(std::initializer_list<const char*> options);
+  bool has_and(std::vector<const char*> options);
 
   /*
    * get the specified option value

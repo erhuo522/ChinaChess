@@ -26,7 +26,7 @@ int generate_gdts() {
 
   ////获取该路径下的所有文件
 
-  auto files = Utils::getFiles(src_path);
+  std::vector<std::string> files = Utils::getFiles(src_path);
   size_t size = files.size();
 
   if (0 == size) {

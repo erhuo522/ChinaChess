@@ -90,7 +90,7 @@ void create_learn_data(const char* raw_data_folder, const char* out_data_folder,
   assert(raw_data_folder);
   assert(out_data_folder);
 
-  auto files = Utils::getFiles(raw_data_folder);
+  std::vector<std::string> files = Utils::getFiles(raw_data_folder);
 
   size_t size = files.size();
   if (0 == size) {
@@ -104,7 +104,7 @@ void create_learn_data(const char* raw_data_folder, const char* out_data_folder,
   std::random_shuffle(files.begin(), files.end());
 
   int count = 0;
-  for( auto it = files.begin(); it != files.end(); ++it )
+  for( std::vector<std::string>::const_iterator it = files.begin(); it != files.end(); ++it )
   {
 
     // 选取前how_many个rawdata数据作为learndata
@@ -139,7 +139,7 @@ void tag_data(const char* source_folder, const char* has_plate_folder,
   assert(no_plate_folder);
   assert(svm_model);
 
-  auto files = Utils::getFiles(source_folder);
+  std::vector<std::string> files = Utils::getFiles(source_folder);
 
   size_t size = files.size();
   if (0 == size) {
@@ -148,9 +148,9 @@ void tag_data(const char* source_folder, const char* has_plate_folder,
   }
 
   CPlateLocate locator;
-  for( auto it = files.begin(); it != files.end(); ++it )
+  for( std::vector<std::string>::const_iterator it = files.begin(); it != files.end(); ++it )
   {
-    auto filename = Utils::getFileName(*it);
+    std::string filename = Utils::getFileName(*it);
     std::cout << "Tagging: " << (*it) << std::endl;
 
     // auto plate_string = plate_from_path(f);
@@ -161,7 +161,7 @@ void tag_data(const char* source_folder, const char* has_plate_folder,
     locator.plateLocate(image, maybe_plates);
 
     int plate_index = 0;
-	for( auto iter = maybe_plates.begin(); iter != maybe_plates.end(); ++iter )
+    for( std::vector<cv::Mat>::const_iterator iter = maybe_plates.begin(); iter != maybe_plates.end(); ++iter )
     {
       char save_to[255] = {0};
       int result = 0;

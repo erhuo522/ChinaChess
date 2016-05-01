@@ -9,6 +9,8 @@ include $(MY_BUILD_PATH)/../opencv_objdetect/opencv_objdetect.mk
 include $(MY_BUILD_PATH)/../opencv_imgcodecs/opencv_imgcodecs.mk
 include $(MY_BUILD_PATH)/../opencv_easypr/opencv_easypr.mk
 
+
+
 LOCAL_PATH = $(MY_BUILD_PATH)
 
 include $(CLEAR_VARS)
@@ -36,12 +38,9 @@ LOCAL_SRC_FILES := $(AMAP_JNI_SRC) \
 
 LOCAL_MODULE    := gdinamapv4112
 
-LOCAL_STATIC_LIBRARIES := \
-gdamapbase  \
-gdamapgraphic  \
-gdamaptools  \
-gdamapdatamgr  \
-gdamapmapmgr  \
+LOCAL_STATIC_LIBRARIES := 
+
+
 
 LOCAL_LDLIBS :=  -L$(SYSROOT)/usr/lib -llog -lGLESv1_CM -lz -ljnigraphics
 
