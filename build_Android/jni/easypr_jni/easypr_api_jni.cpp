@@ -4,9 +4,10 @@
 
 
 JNIEXPORT void JNICALL Java_com_machfe_easypr_EasyPRLib_init
-( JNIEnv*  env, jobject  obj)
+(JNIEnv*  env, jobject  obj, jstring path)
 {
 
-LOGE("machfe", "EasyPRLib");
-
+    const char* szpath = env->GetStringUTFChars(path, 0);
+    LOGE("EasyPRLib", " path = %s", szpath); 
+    env->ReleaseStringUTFChars(path,szpath);
 }
