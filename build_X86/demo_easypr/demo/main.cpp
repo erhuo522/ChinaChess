@@ -315,8 +315,8 @@ void command_line_handler(int argc, const char* argv[]) {
                      auto svm = parser->get("svm")->val();
                      auto ann = parser->get("ann")->val();
 
-                     auto results = easypr::api::plate_recognize(
-                         image.c_str(), svm.c_str(), ann.c_str());
+					 std::vector<std::string> results;
+                     auto bRet = easypr::api::plate_recognize(results, image.c_str(), svm.c_str(), ann.c_str());
 					 for( auto it = results.begin(); it != results .end(); it++)
 					 {
                        std::cout << *it << std::endl;
