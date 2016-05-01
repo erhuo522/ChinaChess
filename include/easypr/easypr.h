@@ -8,7 +8,6 @@
 #include "easypr/preprocess/gdts.h"
 #include "easypr/preprocess/deface.h"
 #include "easypr/util/util.h"
-#include "easypr/util/program_options.h"
 #include "easypr/api.hpp"
 #include "easypr/config.h"
 
