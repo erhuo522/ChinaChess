@@ -7,6 +7,12 @@ namespace easypr {
 const float DEFAULT_BLUEPERCEMT = 0.3f;
 const float DEFAULT_WHITEPERCEMT = 0.1f;
 
+
+bool rect_compare(const Rect& r1, const Rect& r2) 
+{ 
+	return r1.x < r2.x; 
+}
+
 CCharsSegment::CCharsSegment() {
   m_LiuDingSize = DEFAULT_LIUDING_SIZE;
   m_theMatWidth = DEFAULT_MAT_WIDTH;
@@ -170,8 +176,7 @@ int CCharsSegment::charsSegment(Mat input, vector<Mat>& resultVec) {
   // 直接使用stl的sort方法，更有效率
 
   vector<Rect> sortedRect(vecRect);
-  std::sort(sortedRect.begin(), sortedRect.end(),
-            [](const Rect& r1, const Rect& r2) { return r1.x < r2.x; });
+  std::sort(sortedRect.begin(), sortedRect.end(),rect_compare);
 
   size_t specIndex = 0;
 
