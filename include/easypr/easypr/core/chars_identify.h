@@ -17,6 +17,8 @@ public:
   CharsIdentify();
   virtual ~CharsIdentify();
 
+  bool  loadAnn(const char* annFile, const char* charfile);
+
 private:
 
   static CharsIdentify* instance_;

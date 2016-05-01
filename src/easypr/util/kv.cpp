@@ -5,19 +5,26 @@ namespace easypr {
 
 Kv::Kv() { }
 
-void Kv::load(const std::string &file) {
+bool Kv::load(const std::string &file) {
   this->clear();
 
   std::ifstream reader(file.c_str());
-  while (!reader.eof()) {
-    std::string line;
-    std::getline(reader, line);
-    if (line.empty()) continue;
+  if(reader.is_open())
+  {
+	  while (!reader.eof()) 
+	  {
+		std::string line;
+		std::getline(reader, line);
+		if (line.empty()) continue;
 
-    const std::pair<std::string ,std::string> kv = parse(line);
-    this->add(kv.first, kv.second);
+		const std::pair<std::string ,std::string> kv = parse(line);
+		this->add(kv.first, kv.second);
+	  }
+	  reader.close();
+
+	  return true;
   }
-  reader.close();
+  return false; 
 }
 
 const std::pair<std::string ,std::string> Kv::parse(const std::string &str) 

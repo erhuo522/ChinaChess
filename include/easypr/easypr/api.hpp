@@ -12,6 +12,13 @@ namespace easypr {
 
 namespace api {
 
+
+static bool init(const char* annFile, const char* charfile) 
+{
+	CharsIdentify::instance()->loadAnn(annFile, charfile);
+	return true;
+}
+
 static bool plate_judge(const char* image, const char* model) {
   cv::Mat src = cv::imread(image);
 
@@ -41,8 +48,13 @@ static std::vector<std::string> plate_recognize(const char* image,
                                                 const char* model_svm,
                                                 const char* model_ann,
                                                 const bool life_mode = true) {
-  cv::Mat img = cv::imread(image);
 
+  bool bRet= PlateJudge::instance()->loadSvm(model_svm);
+  assert(bRet);
+
+  init(model_ann, "../../data-/etc/province_mapping");
+
+  cv::Mat img = cv::imread(image);
   assert(!img.empty());
 
   CPlateRecognize pr;

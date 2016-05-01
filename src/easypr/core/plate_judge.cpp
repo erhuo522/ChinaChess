@@ -12,7 +12,13 @@ PlateJudge* PlateJudge::instance() {
   return instance_;
 }
 
-PlateJudge::PlateJudge() { svm_ = ml::SVM::load<ml::SVM>(kDefaultSvmPath); }
+PlateJudge::PlateJudge(){}
+
+bool PlateJudge::loadSvm(const char* svmFile)
+{ 
+	svm_ = ml::SVM::load<ml::SVM>(svmFile);
+	return (!svm_.empty());
+}
 
 //! 对单幅图像进行SVM判断
 

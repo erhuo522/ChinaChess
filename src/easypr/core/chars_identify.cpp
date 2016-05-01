@@ -13,10 +13,22 @@ CharsIdentify* CharsIdentify::instance() {
   return instance_;
 }
 
-CharsIdentify::CharsIdentify() {
-  ann_ = ml::ANN_MLP::load<ml::ANN_MLP>(kDefaultAnnPath);
+CharsIdentify::CharsIdentify() {}
+
+bool CharsIdentify::loadAnn(const char* annFile, const char* charfile)
+{
+  ann_ = ml::ANN_MLP::load<ml::ANN_MLP>(annFile);
+  if(ann_.empty())
+  {
+	  return false;
+  }
+
   kv_ = new Kv();
-  kv_->load("../../data/etc/province_mapping");
+  if(kv_->load(charfile))
+  {
+	  return false;
+  }
+  return true;
 }
 
 CharsIdentify::~CharsIdentify()

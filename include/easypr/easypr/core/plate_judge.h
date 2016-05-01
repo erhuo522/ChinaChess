@@ -11,6 +11,10 @@ class PlateJudge {
  public:
   static PlateJudge* instance();
 
+  //! 加载SVM文件
+
+  bool loadSvm(const char* svmFile);
+
   //! 对多幅车牌进行SVM判断
 
   int plateJudge(const std::vector<CPlate> &, std::vector<CPlate> &);

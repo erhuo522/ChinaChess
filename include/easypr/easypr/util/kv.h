@@ -10,7 +10,7 @@ class Kv {
  public:
   Kv();
 
-  void load(const std::string &file);
+  bool load(const std::string &file);
 
   std::string get(const std::string &key);
 
