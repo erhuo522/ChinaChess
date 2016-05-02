@@ -9,8 +9,13 @@
 extern "C" {
 #endif
 
+    
 JNIEXPORT void JNICALL Java_com_machfe_easypr_EasyPRLib_init
-( JNIEnv*  env, jobject  obj, jstring path);
+    (JNIEnv*  env, jobject  obj, jstring path);
+    
+    
+JNIEXPORT jobjectArray JNICALL Java_com_machfe_easypr_EasyPRLib_Recognize
+    ( JNIEnv*  env, jobject  obj, jstring path);
 
 
 

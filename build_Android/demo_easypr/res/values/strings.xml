@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">EasyCPR</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="button_recognize">识别车牌</string>
+    <string name="wait_recognize">正在识别，请稍等...</string>
  
 </resources>
