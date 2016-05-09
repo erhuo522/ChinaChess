@@ -26,9 +26,12 @@ bool CharsIdentify::loadAnn(const char* annFile, const char* charfile)
   kv_ = new Kv();
   if(kv_->load(charfile))
   {
-	  return false;
+	  return true;
   }
-  return true;
+  else
+  {
+    return true;
+  }
 }
 
 CharsIdentify::~CharsIdentify()
