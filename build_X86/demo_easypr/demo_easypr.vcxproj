@@ -14,9 +14,12 @@
     <ClInclude Include="demo\accuracy.hpp" />
     <ClInclude Include="demo\chars.hpp" />
     <ClInclude Include="demo\plate.hpp" />
+    <ClInclude Include="demo\program_options.h" />
+    <ClInclude Include="demo\switch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="demo\main.cpp" />
+    <ClCompile Include="demo\program_options.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C107A48E-08FB-449A-8C91-BB9EF63C1F10}</ProjectGuid>

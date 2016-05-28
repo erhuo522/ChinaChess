@@ -28,7 +28,6 @@
     <ClCompile Include="..\..\src\easypr\train\svm_train.cpp" />
     <ClCompile Include="..\..\src\easypr\train\train.cpp" />
     <ClCompile Include="..\..\src\easypr\util\kv.cpp" />
-    <ClCompile Include="..\..\src\easypr\util\program_options.cpp" />
     <ClCompile Include="..\..\src\easypr\util\util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +50,6 @@
     <ClInclude Include="..\..\include\easypr\easypr\train\svm_train.h" />
     <ClInclude Include="..\..\include\easypr\easypr\train\train.h" />
     <ClInclude Include="..\..\include\easypr\easypr\util\kv.h" />
-    <ClInclude Include="..\..\include\easypr\easypr\util\program_options.h" />
-    <ClInclude Include="..\..\include\easypr\easypr\util\switch.hpp" />
     <ClInclude Include="..\..\include\easypr\easypr\util\util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
