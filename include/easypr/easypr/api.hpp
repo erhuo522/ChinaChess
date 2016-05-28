@@ -8,7 +8,6 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
-#include "android_logcat.h"
 
 namespace easypr {
 
@@ -19,13 +18,11 @@ static bool init( const char* svmFile, const char* annFile, const char* charfile
 {
    if(!CharsIdentify::instance()->loadAnn(annFile, charfile))
    {
-      LOGE("machfe","return1");
       return false; 
    }
 
    if(!PlateJudge::instance()->loadSvm(svmFile))
    {
-    LOGE("machfe","return2");
      return false;
    }
 

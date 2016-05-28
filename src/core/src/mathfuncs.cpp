@@ -957,13 +957,17 @@ template<typename T, typename WT>
 static void
 iPow_i( const T* src, T* dst, int len, int power )
 {
+    
     if( power < 0 )
     {
-        T tab[5] =
-        {
-            power == -1 ? saturate_cast<T>(-1) : 0, (power & 1) ? -1 : 1,
-            std::numeric_limits<T>::max(), 1, power == -1 ? 1 : 0
-        };
+        T tab[5];
+        
+        tab[4] = (power == -1 ? 1 : 0);
+        tab[3] = 1;
+        tab[2] = std::numeric_limits<T>::max();
+        tab[1] = ((power & 1) ? -1 : 1);
+        tab[0] = power == -1 ? saturate_cast<T>(-1) : 0;
+        
         for( int i = 0; i < len; i++ )
         {
             T val = src[i];
@@ -991,6 +995,7 @@ iPow_i( const T* src, T* dst, int len, int power )
             dst[i] = saturate_cast<T>(a);
         }
     }
+    
 }
 
 template<typename T>
