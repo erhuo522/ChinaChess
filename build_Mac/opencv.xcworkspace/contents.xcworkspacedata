@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:demo_easypr/demo_easypr.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_imgecodecs/opencv_imgecodecs.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_easypr/opencv_easypr.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_objdetect/opencv_objdetect.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_imgproc/opencv_imgproc.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_ml/opencv_ml.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_hal/opencv_hal.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:opencv_core/opencv_core.xcodeproj">
+   </FileRef>
+</Workspace>
